@@ -18,7 +18,7 @@ const Users = sequelize.define('Users', {
       // allowNull defaults to true
     },
     Email: {
-        type: DataTypes.STRING(250),
+        type: DataTypes.STRING(255),
         allowNull: true,
         validate: {
             len: {
@@ -28,7 +28,7 @@ const Users = sequelize.define('Users', {
         },
     },
     Password: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(255),
         allowNull: false,
         validator: {
             len: {

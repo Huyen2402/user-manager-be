@@ -12,6 +12,8 @@ const db = require("../db/index")
 /**
  * Get port from environment and store in Express.
  */
+
+//connect database
 db.sequelize
   .sync()
   .then(() => {
@@ -20,7 +22,7 @@ db.sequelize
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
   });
-
+//
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 

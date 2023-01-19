@@ -6,5 +6,6 @@ const getAllUsers = require('../middleware/m_Users')
 /* GET home page. */
 router.get('/', getAllUsers.getAllUsers);
 router.post('/', getAllUsers.createUser )
-
+router.get('/:id', getAllUsers.findUserByID);
+router.put('/:id', getAllUsers.updateUser);
 module.exports = router;

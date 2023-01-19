@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 const Users = require('./Users')
 
-const sequelize = new Sequelize('CustomerPortal_DB', 'sa', '123456', {
+const sequelize = new Sequelize('nodejs', 'sa', '123456', {
   host: 'localhost',
   dialect: 'mssql'
 });
@@ -10,7 +10,7 @@ const authentication = async () => {
 
 }
 authentication();
-    const db = {}
+const db = {}
 db.sequelize = sequelize;
   db.Sequelize = Sequelize;
   db.Users = require('./Users')(sequelize, Sequelize)
