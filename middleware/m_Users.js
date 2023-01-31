@@ -1,4 +1,6 @@
-const db = require('../db/index')
+const db = require('../db/index');
+const jwt = require('jsonwebtoken');
+const secret_key  = '123456aA!';
 // const { Sequelize } = require('sequelize');
 // const sequelize = new Sequelize('CustomerPortal_DB', 'sa', '123456', {
 //     host: 'localhost',
@@ -87,4 +89,40 @@ exports.createUser = async (req, res, next)=> {
         console.log("error", error);
     }
 
+  }
+
+  exports.loginUser = async(req,res,next)=>{
+    console.log("loginUser IDUser", req.body.ID);
+    const body = req.body;
+    const Email = body.Email || '';
+    const Pass = body.Password || '';
+    try {
+        const checkUser = await db.Users.findOne({ where: { Email: Email, Password: Pass } });
+        if(checkUser !== null){
+            console.log("checkUser",checkUser);
+            const token = jwt.sign({ Email: Email }, secret_key, { expiresIn: '1d' });
+            console.log("token",token);
+            res.header('auth-token', token).send(token);
+ 
+        }
+    } catch (error) {
+        console.log("error", error);
+    }
+   
+
+  }
+
+  exports.verifyToken = async(req,res,next)=>{
+    console.log("verifyToken " , req.header('auth-token'));
+    const token = req.header('auth-token');
+     
+    if (!token) return res.status(401).send('Access Denied');
+
+    try {
+        const verified = jwt.verify(token, secret_key);
+        console.log("verified",verified);
+        next();
+    } catch (err) {
+        return res.status(400).send('Invalid Token');
+    }
   }
